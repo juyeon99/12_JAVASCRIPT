@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05. HTMLCollection과 NodeList</title>
+
+    <style>
+        .white {
+            color: white;
+        }
+
+        .black {
+            color: black;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>05. HTMLCollection과 NodeList</h1>
+    <pre>
+        HTMLCollection과 NodeList는 DOM API가 여러 개의 결과 값을 반환하기 위한 DOM 컬렉션 객체이다.
+        
+        HTMLCollection과 NodeList는 모두 유사 배열 객체면서 이터러블이다. 
+        따라서 for...of 문으로 순회할 수 있으며 스프레드 문법을 사용하여 간단히 배열로 변환할 수 있다.
+
+        HTMLCollection
+        getElementsByTagName, getElementsByClassName 메서드가 반환하는 객체이다.
+        노드 객체의 상태 변화를 실시간으로 반영하는 살아있는(live) DOM 컬렉션 객체이다.
+    </pre>
+
+    <h3>HTMLCollection</h3>
+    <pre>
+
+    </pre>
+
+    <ul>
+        <li class='white'>착한 사람 눈에만 보이는 첫 번째 글</li>
+        <li class='white'>착한 사람 눈에만 보이는 두 번째 글</li>
+        <li class='white'>착한 사람 눈에만 보이는 세 번째 글</li>
+    </ul>
+
+    <script>
+        const $whiteList = document.getElementsByClassName('white');
+        console.log($whiteList);
+        
+        // for(let i = 0; i < $whiteList.length; i++){
+        //     $whiteList[i].className = 'black';      // XXX => 첫번째 white가 바뀌고 난 후 live DOM이므로 다시 $whiteList를 가져오는데 length는 2로 업데이트 되지만 i는 그대로 1인 상태이기 때문에 2번째 li를 건너 뛰게 됨.
+        // }
+
+        // for(let i = $whiteList.length - 1; i >= 0; i--){
+        //     $whiteList[i].className = 'black';
+        // }
+
+        // let i = 0;
+        // while ($whiteList.length > 0){
+        //     $whiteList[i].className = 'black';
+        //     i++;
+        // }
+
+        // 객체를 바로 쓰지 않고 배열로 전환해서 사용하는 것이 권장됨
+        // [...$whiteList].forEach(list => list.className = 'black');
+        Array.from($whiteList).forEach(list => list.className = 'black');
+    </script>
+
+    <h3>NodeList</h3>
+    <pre>
+        querySelectorAll 메서드가 반환하는 객체이다. 
+        실시간으로 노드 객체의 상태를 변경하지 않기(non-live) 때문에 HTMLCollection의 부작용을 해결할 수 있다.
+    </pre>
+
+    <ul id="lists">
+        <li class='red'>빨간 휴지 줄까~ 파란 휴지 줄까~</li>
+        <li class='red'>빨간 휴지 줄까~ 파란 휴지 줄까~</li>
+        <li class='red'>빨간 휴지 줄까~ 파란 휴지 줄까~</li>
+    </ul>
+
+    <script>
+        const $redList = document.querySelectorAll('.red');
+
+        // NodeList.prototype에는 forEach 이외에도 item, entries, keys, values 메소드 제공
+        $redList.forEach(list => list.className = 'blue');
+    </script>
+
+    <pre>
+        대부분 non-live 객체로 동작하지만 
+        <b>chileNodes 프로퍼티가 반환하는 NodeList 객체는 HTMLCollection 객체처럼 실시간으로 노드 객체의 상태를 변경하는 live 객체</b>로 동작하므로 주의 필요
+    </pre>
+
+    <script>
+        const $lists = document.getElementById('lists');
+
+        // const childNodes = $lists.childNodes;
+        const {childNodes} = $lists;    // 구조분해 할당 문법
+
+        // 지우기 전 log
+        console.log(childNodes);
+        
+
+        for(let i = 0; i < childNodes.length; i++){
+            $lists.removeChild(childNodes[i]);  // XXX => 반복문 사용할 때 live로 반영이 되는데 i는 그대로기 때문에 1,3,5,7에 해당하는 요소만 지워짐
+        }
+        // 지운 후 log
+        console.log(childNodes);
+
+        // 객체를 바로 쓰지 않고 배열로 전환해서 사용하는 것이 권장됨
+    </script>
+</body>
+</html>
