@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03. 노드 생성과 추가</title>
+</head>
+<body>
+    <h1>03. 노드 생성과 추가</h1>
+    <pre>
+    Document.prototype.createElement(tagName) : 인수로 전달받은 태그 이름에 해당하는 요소 노드를 생성하여 반환 
+    Document.prototype.createTextNode(text) : 인수로 전달받은 텍스트 값으로 텍스트 노드를 생성하여 반환
+    Node.prototype.appendChild(childNode) : 인수로 전달받은 노드를 appendChild 메서드를 호출한 노드의 마지막 자식 노드로 추가
+    </pre>
+    
+    <ul id="drink">
+        <li>커피</li>
+    </ul>
+
+    <script>
+        const $drink = document.getElementById('drink');
+
+        // 요소 노드 생성
+        const $li = document.createElement('li');
+
+        // 텍스트 노드 생성
+        const textNode = document.createTextNode('콜라');
+
+        // 요소 노드의 자식 노드로 추가
+        $li.appendChild(textNode);
+
+        // $li 요소 노드를 $drink 요소 노드의 마지막 자식 노드로 추가
+        $drink.appendChild($li);
+    </script>
+
+    <h3>복수(여러개의) 노드 생성과 추가</h3>
+    <!-- ul#food>li -->
+    <ul id="food">
+        <li>김치찌개</li>
+    </ul>
+
+    <script>
+        // 1. food 요소로 찾기 => inefficient
+        const $food = document.getElementById('food');
+        // ['된장찌개','고등어구이','순대국'].forEach(text => {
+        //     const $li = document.createElement('li');
+        //     $li.textContent = text;
+        //     // DOM이 3번 그려지면서 리플로우, 리페인트 3번 실행됨 => inefficient
+        //     $food.appendChild($li);
+        // });
+
+        // 2. 컨테이너 요소인 div 활용 => 효율성은 나아졌지만 굳이 필요 없는 div가 감싸고 있음
+        // const $container = document.createElement('div');
+        // ['된장찌개','고등어구이','순대국'].forEach(text => {
+        //     const $li = document.createElement('li');
+        //     $li.textContent = text;
+        //     // div에 li를 추가
+        //     $container.append($li);
+        // });
+        // $food.appendChild($container);  // 화면 그려지는 것이 1번만 실행됨
+
+        // 3. DocumentFragment 별도의 서브 DOM => efficient
+        const $fragment = document.createDocumentFragment();
+        ['된장찌개','고등어구이','순대국'].forEach(text => {
+            const $li = document.createElement('li');
+            $li.textContent = text;
+            // DocumentFragment 노드에 li 추가
+            $fragment.appendChild($li);
+        });
+        // DocumentFragment 노드를 DOM에 추가하면 자신은 제거되고 자식 노드들만 추가
+        // 리플로우와 리페인트 한 번만 실행 => efficient
+        $food.appendChild($fragment);
+    </script>
+</body>
+</html>
