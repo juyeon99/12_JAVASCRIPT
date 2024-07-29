@@ -20,3 +20,4 @@ var obj = null;
 // obj가 falsy(null, undefined) 값이면 좌항만 실행하여 val -> null
 // obj가 truthy 값이면 val -> obj.value
 var val = obj && obj.value;
+console.log(val);                   // null
