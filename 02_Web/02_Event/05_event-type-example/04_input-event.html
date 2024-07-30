@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04. 사용자 입력 양식 이벤트</title>
+
+    <style>
+        .lightgray { background: lightgray; }
+        .focused { outline: 3px dashed yellow; }
+    </style>
+</head>
+<body>
+    <h1>04. 사용자 입력 양식 이벤트</h1>
+
+    <form name="memberjoin">
+
+        <label for="username">이름</label>
+        <input type="text" name="username" id="username" value="홍길동">
+
+        <br><br>
+        
+        <label>성별</label>
+        <input type="radio" name="gender" id="male" value="m" checked><label for="male">남자</label>
+        <input type="radio" name="gender" id="female" value="f"><label for="female">여자</label>
+        
+        <br><br>
+
+        <label>나이</label>
+        <select id="age" name="age">
+            <option value="10">10대 이하</option>
+            <option value="20">20대</option>
+            <option value="30">30대</option>
+            <option value="40">40대</option>
+            <option value="50">50대</option>
+            <option value="60">60대 이상</option>
+        </select>
+
+        <br><br>
+
+        <label>자기소개</label>
+        <textarea name="introduce" id="introduce" rows="5" cols="30"
+        style="resize:none;">저를 소개합니다!</textarea>
+        <span>0</span>/5000자
+
+        <br><br>
+
+        <input type="submit" value="제출">
+    </form>
+
+    <h3>폼 요소 값 다루기</h3>
+    <pre>
+    input, textarea : input.value 또는 input.checked(checkbox 또는 radio)
+    select.options : option 하위 요소들을 담고 있는 컬렉션
+    select.value : 현재 선택 된 option 값
+    select.selectedIndex : 현재 선택 된 option의 번호(인덱스)
+    </pre>
+
+    <script>
+        console.log(document.forms);                // HTMLCollection 타입 반환
+        console.log(document.forms.memberjoin);     // name 속성으로 찾기
+        console.log(document.forms[0]);             // 인덱스 값으로 찾기
+        
+        const $form = document.forms.memberjoin;
+
+        // 폼 내의 요소 취득
+        // form 내 사용자 입력 양식을 HTMLFormControlsCollection 타입으로 반환
+        console.log($form.elements);
+        console.log($form.elements.username);   // <input type="text" name="username" id="username" value="홍길동">
+
+        const $username = $form.username;
+        console.log($username.value);           // 홍길동
+
+        $username.value = '유관순';
+
+        const $gender = $form.gender;
+        console.log($gender);
+
+        $gender[1].checked = true;              // 여자 선택
+
+        const $age = $form.age;
+        console.log($age.options);
+        
+        $age.options[2].selected = true;
+        age.selectedIndex = 3;
+        age.value = '50';                       // 50대 선택
+        // age.value = '55';                       // 50대로 선택 안되지만 value는 55로 되어있음
+
+        const $introduce = $form.introduce;
+        console.log($introduce);
+        $introduce.value = 'value';
+        $introduce.textContent = 'textContent';
+        console.log($introduce.value);          // value
+    </script>
+
+    <h3>focus, blur 이벤트</h3>
+    <pre>
+    focus : 사용자가 폼 요소를 클릭하거나 tab 키를 눌러 요소로 이동 했을 때 발생하는 이벤트이다.
+    blur : 사용자가 다른 곳을 클릭하거나 tab 키를 눌러 다음 폼 필드로 이동했을 때 발생하는 이벤트이다. 
+    또한 focus, blur 메소드로 요소에 포커스를 주거나 제거할 수 있다.
+    </pre>
+
+    <script>
+        $username.onfocus = (e) => {
+            e.target.classList.toggle('lightgray');
+        }
+
+        $username.onblur = (e) => {
+            e.target.classList.toggle('lightgray');
+        }
+    </script>
+</body>
+</html>
