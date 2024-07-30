@@ -26,6 +26,7 @@ function repeat(func, count) {
         console.log(func());
     }
 
+    // 4.
     return function() {
         console.log(`${count}번 반복 완료`);
     }
@@ -39,13 +40,12 @@ repeat(obj.hello, 5);   // 안녕하세요!
 console.log("====================");
 
 // 4.
-var returnFunction = repeat(obj.hello, 5);
-returnFunction();   // 안녕하세요!
-                    // 안녕하세요!
-                    // 안녕하세요!
-                    // 안녕하세요!
-                    // 안녕하세요!
-                    // 5번 반복 완료
+var returnFunction = repeat(obj.hello, 5);  // 안녕하세요!
+                                            // 안녕하세요!
+                                            // 안녕하세요!
+                                            // 안녕하세요!
+                                            // 안녕하세요!
+returnFunction();   // 5번 반복 완료
 
 // 함수가 일급 객체라는 것은 함수를 객체와 동일하게 사용할 수 있다는 의미
 // 객체는 값이므로 함수는 값과 동일하게 취급 가능
