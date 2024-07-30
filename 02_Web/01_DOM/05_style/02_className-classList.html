@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02. className과 classList</title>
+    <style>
+        .area {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+
+        .circle { border-radius: 50%; }
+
+        .lightgray { background-color: lightgray; }
+
+        .yellow { background-color: yellow; }
+    </style>
+</head>
+<body>
+    <h1>02. className과 classList</h1>
+
+    <pre>
+    class 어트리뷰트에 대응하는 DOM 프로퍼티는 class가 아니라 className, classList이다. 
+    Element.prototype.className 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로 
+    요소 노드의 className 프로퍼티를 참조하면 class 어트리뷰트의 값을 문자열로 반환하고, 
+    요소 노드의 className 프로퍼티에 문자열을 할당하면 class 어트리뷰트 값을 할당한 문자열로 변경한다.
+    Element.prototype.classList 프로퍼티는 class 어트리뷰트의 정보를 담은 DOMTokenList 객체를 반환한다. 
+    </pre>
+    
+    <div class='area'></div>
+
+    <script>
+        const $area = document.querySelector('.area');
+        console.log($area);
+        console.log($area.className);   // area
+
+        // $area.className = 'circle';
+
+        console.log($area.classList);
+
+        // classList.add(): class 어트리뷰트에 값 추가
+        // classList.remove(): class 어트리뷰트 값 제거
+        $area.classList.add('circle');
+        $area.classList.add('yellow');
+
+        $area.classList.remove('yellow');
+        $area.classList.add('lightgray');
+
+        console.log($area.classList.item(0));   // area
+        console.log($area.classList.item(1));   // circle
+        console.log($area.classList.item(2));   // lightgray
+        
+        // contains(className): 인수로 전달한 문자열과 일치하는 클래스가 존재하는지 확인
+        console.log($area.classList.contains('circle'));    // true
+        console.log($area.classList.contains('yellow'));    // false
+        
+        // replace(oldClassName, newClassName): 첫 번째 인수로 전달한 문자열을 두 번째 인수로 전달한 문자열로 변경
+        $area.classList.replace('lightgray','yellow');
+
+        // toggle(className): 있으면 제거, 없으면 추가
+        $area.classList.toggle('yellow');   // 제거
+        $area.classList.toggle('yellow');   // 추가
+    </script>
+</body>
+</html>
