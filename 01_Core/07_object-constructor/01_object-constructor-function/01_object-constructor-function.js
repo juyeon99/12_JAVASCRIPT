@@ -9,4 +9,4 @@ const student = new Object();
 // 프로퍼티 추가
 student.name = '유관순';
 student.age = 16;
-console.log(student);
+console.log(student);   // { name: '유관순', age: 16 }
