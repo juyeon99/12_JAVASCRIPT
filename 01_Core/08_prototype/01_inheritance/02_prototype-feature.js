@@ -1,7 +1,7 @@
 const user = {
     id : 'user',
     login : function(){
-        console.log(`#{this.id}님 로그인 되었습니다.`);
+        console.log(`${this.id}님 로그인 되었습니다.`);
     }
 }
 
@@ -18,7 +18,7 @@ const student = {
 student.id = 'user01';
 console.log(student);   // { id: 'user01' }
 
-student.login();        // #{this.id}님 로그인 되었습니다.
+student.login();        // user01님 로그인 되었습니다.
 
 console.log("=====================");
 for(let prop in student) {
@@ -35,8 +35,7 @@ for(let prop in student) {
     } else {
         console.log(`상속 프로퍼티 ${prop}`);
     }
-}
-// output:  id
-//          객체 자신의 프로퍼티 id
-//          login
-//          상속 프로퍼티 login
+}       // id
+        // 객체 자신의 프로퍼티 id
+        // login
+        // 상속 프로퍼티 login
