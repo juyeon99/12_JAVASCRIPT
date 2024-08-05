@@ -4,7 +4,7 @@
 (function() {
     // 'use strict';
 
-    // d 선언하지 않은 변수를 참조하면 에러 발생
+    // 선언하지 않은 변수를 참조하면 에러 발생
     x = 1;
     console.log(x);     // ReferenceError: x is not defined
 }());
