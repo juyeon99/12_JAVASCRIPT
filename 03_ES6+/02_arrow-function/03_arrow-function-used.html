@@ -1,0 +1,28 @@
+<!-- 화살표 함수가 많이 사용되는 곳 -->
+<button id="button">버튼</button>
+
+<script>
+    // 1. forEach의 콜백함수
+    let arr = [1,2,3,4,5];
+    arr.forEach(function(num) {
+        console.log(num);
+    });
+
+    arr.forEach(num => console.log(num));
+
+    // 2. EventListener
+    document.getElementById('button').addEventListener('click',
+        (event) => {
+            console.log('버튼 클릭');
+            event.currentTarget;
+        }
+    )
+
+    // 3. Object 안의 함수
+    let object = {
+        function : function(){
+            console.log('hello');
+        },
+        function2 : () => console.log('arrow hello')
+    }
+</script>
